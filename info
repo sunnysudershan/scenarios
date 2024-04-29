@@ -1,0 +1,1 @@
+oc login -u kubeadmin -p Ddbvk-odz4g-NghN8-TiFC8 https://api.crc.testing:6443
