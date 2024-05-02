@@ -1,0 +1,57 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: project-request
+objects:
+- apiVersion: project.openshift.io/v1
+  kind: Project
+  metadata:
+    annotations:
+      openshift.io/description: ${PROJECT_DESCRIPTION}
+      openshift.io/display-name: ${PROJECT_DISPLAYNAME}
+      openshift.io/requester: ${PROJECT_REQUESTING_USER}
+    name: ${PROJECT_NAME}
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    name: admin
+    namespace: ${PROJECT_NAME}
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: admin
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: ${PROJECT_ADMIN_USER}
+- apiVersion: v1
+  kind: ResourceQuota
+  metadata:
+    name: "${PROJECT_NAME}-quota"
+    creationTimestamp: null
+  spec:
+    hard:
+      limits.cpu: "4"
+      limits.memory: "4Gi"
+      pods: "10"
+      requests.cpu: "2"
+      requests.memory: "1Gi"
+- apiVersion: "v1"
+  kind: "LimitRange"
+  metadata:
+    name: "${PROJECT_NAME}-limitrange"
+  spec:
+    limits: 
+      - type: "Container"
+        default:
+          cpu: "100m"
+          memory: "100Mi"
+        defaultRequest:
+          cpu: "30m"
+          memory: "30Mi"
+parameters:
+- name: PROJECT_NAME
+- name: PROJECT_DISPLAYNAME
+- name: PROJECT_DESCRIPTION
+- name: PROJECT_ADMIN_USER
+- name: PROJECT_REQUESTING_USER

@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  creationTimestamp: "2024-05-02T04:58:01Z"
+  generation: 2
+  name: scaling
+  namespace: marathon
+  resourceVersion: "1215614"
+  uid: ed63f0bf-6312-47cd-99a9-2c5620c87523
+spec:
+  concurrencyPolicy: Allow
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+      name: scaling
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - image: quay.io/redhattraining/scaling
+            imagePullPolicy: Always
+            name: scaling
+            resources: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+          dnsPolicy: ClusterFirst
+          restartPolicy: OnFailure
+          schedulerName: default-scheduler
+          securityContext: {}
+          serviceAccount: ex280-ocpsa
+          serviceAccountName: ex280-ocpsa
+          terminationGracePeriodSeconds: 30
+  schedule: 5 4 2 * *
+  successfulJobsHistoryLimit: 3
+  suspend: false
+status: {}

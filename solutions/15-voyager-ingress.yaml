@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{},"name":"voyager","namespace":"path-finder"},"spec":{"rules":[{"host":"voyager.app.ocp4.example.com","http":{"paths":[{"backend":{"service":{"name":"voyager","port":{"number":8080}}},"path":"/","pathType":"Prefix"}]}}]}}
+  creationTimestamp: "2024-04-29T04:53:58Z"
+  generation: 2
+  name: voyager
+  namespace: path-finder
+  resourceVersion: "613352"
+  uid: 4ba12b20-a98c-4151-b4f9-4963c5b622b3
+spec:
+  rules:
+  - host: voyager.apps.ocp4.example.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: voyager
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer:
+    ingress:
+    - hostname: router-default.apps.ocp4.example.com

@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2024-04-29T04:53:53Z"
+  labels:
+    app: oranges
+  name: oranges
+  namespace: apples
+  resourceVersion: "556245"
+  uid: abe35c06-219e-43a9-abb5-97e1f8841407
+spec:
+  clusterIP: 172.30.109.223
+  clusterIPs:
+  - 172.30.109.223
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  - name: 8888-tcp
+    port: 8888
+    protocol: TCP
+    targetPort: 8888
+  selector:
+    deployment: oranges
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
